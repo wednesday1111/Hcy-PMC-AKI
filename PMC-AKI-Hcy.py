@@ -19,7 +19,7 @@ import shap
 import pickle
 import xgboost as xgb
 from xgboost import XGBClassifier
-from sklearn.ensemble import GradientBoostingClassifier
+#from sklearn.ensemble import GradientBoostingClassifier
 # load the saved model
 import plotly.figure_factory as ff
 import matplotlib.pyplot as plt
@@ -60,8 +60,10 @@ st.set_page_config(
 #st.title("Real-Time Fraud Detection Dashboard")
 #st.markdown("<h1 style='text-align: center; color: black;'>机器学习： 实时识别出虚假销售</h1>", unsafe_allow_html=True)
 st.markdown("<h1 style='text-align: center; color: black;'>A Prediction Model for </h1>", unsafe_allow_html=True)
-st.markdown("<h1 style='text-align: center; color: black;'>Cirrhotic patients with AKI (PMC-AKI)</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: black;'>Cirrhotic patients with AKI (Hcy-PMC-AKI)</h1>", unsafe_allow_html=True)
 st.markdown("<h1 style='text-align: center; color: black;'> </h1>", unsafe_allow_html=True)
+
+import random
 
 
 # side-bar 
@@ -83,7 +85,7 @@ def user_input_features():
     return output
 
 outputdf = user_input_features()
-outputdf_ = user_input_features()
+outputdf_ = outputdf
 
 #online delete position
 with open('XGB20231227_.pkl', 'rb') as f:
@@ -107,8 +109,8 @@ outputdf_ = pd.DataFrame([outputdf_], columns= colnames_)
 #p1 = catmodel.predict(dtest)[0]
 #p2 = catmodel.predict_proba(dtest)
 p2 = catmodel.predict_proba(outputdf.iloc[:,1:])[:, 1]
-p2 = p2+(outputdf.iat[0,0]-3.4)/(33.5-3.4)
-p2 = (p2-0.17)/(1.84-0.17)
+p2 = p2+(outputdf.iat[0,0]-0.1)/(85.8-0.1)
+p2 = (p2-0.004)/(1.6-0.004)
 p1 = 0
 if p2 < 0.15:
     p1 = 'Low risk of AKI'
